@@ -3,27 +3,27 @@
 FBullCowGame::FBullCowGame() {
 
     // Fill Word List
-    Words.push_back(FWord("cow", 5));
-    Words.push_back(FWord("ape", 5));
-    Words.push_back(FWord("ant", 5));
-    Words.push_back(FWord("dog", 5));
-    Words.push_back(FWord("cat", 5));
+    Words.push_back(FWord("cow", 4));
+    Words.push_back(FWord("ape", 4));
+    Words.push_back(FWord("ant", 4));
+    Words.push_back(FWord("dog", 4));
+    Words.push_back(FWord("cat", 4));
 
     Words.push_back(FWord("bear", 7));
     Words.push_back(FWord("lion", 7));
 
-    Words.push_back(FWord("tiger", 8));
-    Words.push_back(FWord("rhino", 8));
-    Words.push_back(FWord("zebra", 8));
-    Words.push_back(FWord("tapir", 8));
+    Words.push_back(FWord("tiger", 10));
+    Words.push_back(FWord("rhino", 10));
+    Words.push_back(FWord("zebra", 10));
+    Words.push_back(FWord("tapir", 10));
 
-    Words.push_back(FWord("donkey", 10));
-    Words.push_back(FWord("monkey", 10));
-    Words.push_back(FWord("cougar", 10));
+    Words.push_back(FWord("donkey", 16));
+    Words.push_back(FWord("monkey", 16));
+    Words.push_back(FWord("cougar", 16));
 
-    Words.push_back(FWord("pelican", 12));
-    Words.push_back(FWord("hamster", 12));
-    Words.push_back(FWord("leopard", 12));
+    Words.push_back(FWord("pelican", 20));
+    Words.push_back(FWord("hamster", 20));
+    Words.push_back(FWord("leopard", 20));
 
     Reset();
 }
