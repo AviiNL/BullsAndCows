@@ -3,9 +3,30 @@
 #include <iostream>
 #include <algorithm>
 #include <string>
+#include <map>
+#include <vector>
+#include <ctime>
+
+#define TMap std::map
+#define TSet std::vector
 
 using FString = std::string;
 using int32 = int;
+
+struct FWord {
+    FWord() {
+        Word = "";
+        MaxTries = 0;
+    }
+
+    FWord(FString word, int32 maxTries) {
+        Word = word;
+        MaxTries = maxTries;
+    }
+
+    FString Word;
+    int32 MaxTries;
+};
 
 struct FBullCowCount {
     int32 Bulls = 0;
@@ -22,8 +43,8 @@ enum class EWordStatus {
 
 class FBullCowGame {
 public:
-    FBullCowGame(FString, int32);
-    void Reset(FString, int32);
+    FBullCowGame();
+    void Reset();
     int32 GetMaxTries() const;
     int32 GetCurrentTry() const;
     int32 GetWordLength() const;
@@ -32,9 +53,11 @@ public:
     FBullCowCount SubmitGuess(FString);
 
 private:
-    FString MyWord;
+    FWord MyWord;
     int MyMaxTries;
     int MyCurrentTry;
     bool bGameWon;
+    TSet<FWord> Words;
+    FWord GetRandomWord();
 };
 

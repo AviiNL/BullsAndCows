@@ -1,18 +1,41 @@
 #include "FBullCowGame.h"
 
-FBullCowGame::FBullCowGame(FString Word, int32 MaxTries) {
-    Reset(Word, MaxTries);
+FBullCowGame::FBullCowGame() {
+
+    // Fill Word List
+    Words.push_back(FWord("cow", 5));
+    Words.push_back(FWord("ape", 5));
+    Words.push_back(FWord("ant", 5));
+    Words.push_back(FWord("dog", 5));
+    Words.push_back(FWord("cat", 5));
+
+    Words.push_back(FWord("bear", 7));
+    Words.push_back(FWord("lion", 7));
+
+    Words.push_back(FWord("tiger", 8));
+    Words.push_back(FWord("rhino", 8));
+    Words.push_back(FWord("zebra", 8));
+    Words.push_back(FWord("tapir", 8));
+
+    Words.push_back(FWord("donkey", 10));
+    Words.push_back(FWord("monkey", 10));
+    Words.push_back(FWord("cougar", 10));
+
+    Words.push_back(FWord("pelican", 12));
+    Words.push_back(FWord("hamster", 12));
+    Words.push_back(FWord("leopard", 12));
+
+    Reset();
 }
 
-void FBullCowGame::Reset(FString Word, int32 MaxTries) {
+void FBullCowGame::Reset() {
     bGameWon = false;
-    MyWord = Word;
-    MyMaxTries = MaxTries;
+    MyWord = GetRandomWord();
     MyCurrentTry = 1;
 }
 
 int32 FBullCowGame::GetMaxTries() const {
-    return MyMaxTries;
+    return MyWord.MaxTries;
 }
 
 int32 FBullCowGame::GetCurrentTry() const {
@@ -20,7 +43,7 @@ int32 FBullCowGame::GetCurrentTry() const {
 }
 
 int32 FBullCowGame::GetWordLength() const {
-    return MyWord.length();
+    return MyWord.Word.length();
 }
 
 bool FBullCowGame::IsGameWon() const {
@@ -47,9 +70,14 @@ EWordStatus FBullCowGame::CheckGuessValidity(FString Guess) const {
     };
 
     // Check if the Guess not an isogram
-    std::sort(Guess.begin(), Guess.end());
-    if (std::adjacent_find(Guess.begin(), Guess.end()) != Guess.end()) {
-        return EWordStatus::Not_Isogram;
+    TMap<char, bool> LettersSeen;
+
+    for (char Letter : Guess) {
+        if (LettersSeen[Letter]) {
+            return EWordStatus::Not_Isogram;
+        }
+
+        LettersSeen[Letter] = true;
     }
 
     // All is good
@@ -59,12 +87,12 @@ EWordStatus FBullCowGame::CheckGuessValidity(FString Guess) const {
 FBullCowCount FBullCowGame::SubmitGuess(FString Guess) {
     ++MyCurrentTry;
     FBullCowCount BullCowCount;
-    int WordLength = MyWord.length();
+    int WordLength = GetWordLength();
     int GuessLength = Guess.length();
 
     for (int32 i = 0; i < WordLength; i++) {
         for (int32 j = 0; j < GuessLength; j++) {
-            if (MyWord[i] == Guess[j]) {
+            if (MyWord.Word[i] == Guess[j]) {
                 if (i == j) {
                     BullCowCount.Bulls++;
                 } else {
@@ -80,4 +108,11 @@ FBullCowCount FBullCowGame::SubmitGuess(FString Guess) {
     }
 
     return BullCowCount;
+}
+
+FWord FBullCowGame::GetRandomWord() {
+    srand(time(NULL));
+    int32 random = rand() % Words.size();
+
+    return Words[random];
 }
